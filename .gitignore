@@ -31,3 +31,6 @@
 
 # Ignore local rvm settings
 .ruby-gemset
+
+# Ignore local DB config
+/config/database.yml
