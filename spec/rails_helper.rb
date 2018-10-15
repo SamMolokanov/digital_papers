@@ -32,6 +32,10 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+require "support/factory_bot"
+require "support/json_matchers"
+require "support/shoulda_matchers"
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

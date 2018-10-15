@@ -36,7 +36,8 @@ gem "rack-cors", "~> 1.0.2", require: "rack/cors"
 # gem 'redis', '~> 4.0'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem "bcrypt", "~> 3.1.7"
+gem "jwt", "~> 2.1.0"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -53,6 +54,9 @@ group :development, :test do
   gem "rubocop-rails_config", "~> 0.2.5", require: false
 
   gem "rspec-rails", "~> 3.8"
+  gem "factory_bot_rails", "~> 4.11.1"
+  gem "shoulda-matchers", "4.0.0.rc1"
+  gem "json_matchers"
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
