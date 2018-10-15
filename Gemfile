@@ -21,6 +21,17 @@ gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.5"
 
+# Grape and Swagger API
+#
+gem "grape", "~> 1.1.0"
+gem "grape-entity", "~> 0.7.1"
+gem "grape-swagger", "~> 0.31.0"
+gem "grape-swagger-entity", "~> 0.3.0"
+gem "grape-swagger-rails", "~> 0.3.0"
+gem "grape_logging", "~> 1.8.0"
+
+gem "rack-cors", "~> 1.0.2", require: "rack/cors"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
@@ -37,6 +48,7 @@ gem "jbuilder", "~> 2.5"
 gem "bootsnap", ">= 1.1.0", require: false
 
 group :development, :test do
+  gem "pry", "~> 0.11.3"
   gem "rubocop", "~> 0.59.2", require: false
   gem "rubocop-rails_config", "~> 0.2.5", require: false
 
