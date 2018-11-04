@@ -4,13 +4,11 @@ describe "DELETE /api/authorized/users/sessions" do
   let(:path) { "/api/authorized/users/sessions" }
 
   context "when valid params" do
-    let(:user) { create :user }
-
-    let(:session) { Auth::Session.new(pepper: user.password_digest) }
+    let(:user) { create :authorized_user }
+    let(:session) { user.sessions.first }
 
     before do
       user.sessions << Auth::Session.new(pepper: user.password_digest)
-      user.sessions << session
       user.sessions << Auth::Session.new(pepper: user.password_digest)
       user.save
     end
@@ -32,14 +30,7 @@ describe "DELETE /api/authorized/users/sessions" do
   end
 
   context "when invalid token is given" do
-    let(:user) { create :user }
-
-    let(:session) { Auth::Session.new(pepper: user.password_digest) }
-
-    before do
-      user.sessions << session
-      user.save
-    end
+    let(:user) { create :authorized_user }
 
     context "when performs request" do
       subject(:perform_request) do

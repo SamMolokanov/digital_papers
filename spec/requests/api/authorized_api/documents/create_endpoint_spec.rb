@@ -4,15 +4,8 @@ describe "POST /api/authorized/documents" do
   let(:path) { "/api/authorized/documents" }
 
   context "when valid params" do
-    let(:user) { create :user }
-
-    # TODO: create an Rspec helper for auth user
-    let(:session) { Auth::Session.new(pepper: user.password_digest) }
-
-    before do
-      user.sessions << session
-      user.save
-    end
+    let(:user) { create :authorized_user }
+    let(:auth_token) { "Bearer #{user.sessions.first.token}" }
 
     context "when performs request" do
       let(:params) do
@@ -26,7 +19,7 @@ describe "POST /api/authorized/documents" do
         post(
           path,
           params: params,
-          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+          headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
         )
       end
 
@@ -47,7 +40,7 @@ describe "POST /api/authorized/documents" do
         post(
           path,
           params: params,
-          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+          headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
         )
       end
 
@@ -76,7 +69,7 @@ describe "POST /api/authorized/documents" do
         post(
           path,
           params: params,
-          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+          headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
         )
       end
 
@@ -92,7 +85,7 @@ describe "POST /api/authorized/documents" do
         post(
           path,
           params: { file: fixture_file_upload("files/book.jpg", "image/jpg") },
-          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+          headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
         )
       end
 
@@ -105,22 +98,15 @@ describe "POST /api/authorized/documents" do
   end
 
   context "when invalid params" do
-    let(:user) { create :user }
-
-    # TODO: create an Rspec helper for auth user
-    let(:session) { Auth::Session.new(pepper: user.password_digest) }
-
-    before do
-      user.sessions << session
-      user.save
-    end
+    let(:user) { create :authorized_user }
+    let(:auth_token) { "Bearer #{user.sessions.first.token}" }
 
     context "when file is not provided" do
       before do
         post(
           path,
           params: { name: "foobar" },
-          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+          headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
         )
       end
 

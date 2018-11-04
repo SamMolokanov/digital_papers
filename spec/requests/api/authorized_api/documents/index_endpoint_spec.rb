@@ -4,21 +4,16 @@ describe "GET /api/authorized/documents" do
   let(:path) { "/api/authorized/documents" }
 
   context "when returns response" do
-    let(:user) { create :user }
-
-    # TODO: create an Rspec helper for auth user
-    let(:session) { Auth::Session.new(pepper: user.password_digest) }
+    let(:user) { create :authorized_user }
+    let(:auth_token) { "Bearer #{user.sessions.first.token}" }
 
     let!(:document1) { create :document, user: user, name: "foo", created_at: DateTime.parse("22-12-2015") }
     let!(:document2) { create :document, user: user, name: "bar", created_at: DateTime.parse("12-11-2017") }
 
     before do
-      user.sessions << session
-      user.save
-
       get(
         path,
-        headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+        headers: { "ACCEPT" => "application/json", "Authorization" => auth_token },
       )
     end
 
