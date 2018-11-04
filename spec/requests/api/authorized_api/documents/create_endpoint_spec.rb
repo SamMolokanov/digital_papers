@@ -33,8 +33,35 @@ describe "POST /api/authorized/documents" do
       it "creates a document for the user" do
         expect { subject }.to change { user.reload.documents.count }.by(1)
       end
+    end
 
-      it { subject; expect(response).to have_http_status :created }
+    context "when return response" do
+      let(:params) do
+        {
+          name: "Some Document Name",
+          file: fixture_file_upload("files/book.jpg", "image/jpg"),
+        }
+      end
+
+      before do
+        post(
+          path,
+          params: params,
+          headers: { "ACCEPT" => "application/json", "Authorization" => "Bearer #{session.token}" },
+        )
+      end
+
+      subject { response }
+
+      it { is_expected.to have_http_status :created }
+      it { is_expected.to match_json_schema("authorized_api/document") }
+
+      it "returns the created document as json" do
+        expect(JSON.parse(subject.body)).to eq(
+          "id" => user.documents.last.id,
+          "name" => "some document name",
+        )
+      end
     end
 
     context "when creates a document with the name" do
