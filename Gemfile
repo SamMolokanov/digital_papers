@@ -21,11 +21,23 @@ gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.5"
 
+# Grape and Swagger API
+#
+gem "grape", "~> 1.1.0"
+gem "grape-entity", "~> 0.7.1"
+gem "grape-swagger", "~> 0.31.0"
+gem "grape-swagger-entity", "~> 0.3.0"
+gem "grape-swagger-rails", "~> 0.3.0"
+gem "grape_logging", "~> 1.8.0"
+
+gem "rack-cors", "~> 1.0.2", require: "rack/cors"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem "bcrypt", "~> 3.1.7"
+gem "jwt", "~> 2.1.0"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -37,10 +49,14 @@ gem "jbuilder", "~> 2.5"
 gem "bootsnap", ">= 1.1.0", require: false
 
 group :development, :test do
+  gem "pry", "~> 0.11.3"
   gem "rubocop", "~> 0.59.2", require: false
   gem "rubocop-rails_config", "~> 0.2.5", require: false
 
   gem "rspec-rails", "~> 3.8"
+  gem "factory_bot_rails", "~> 4.11.1"
+  gem "shoulda-matchers", "4.0.0.rc1"
+  gem "json_matchers"
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
