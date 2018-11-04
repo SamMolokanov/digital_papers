@@ -3,6 +3,7 @@ module Api
     module Documents
       class RootEndpoint < Grape::API
         mount Documents::CreateEndpoint
+        mount Documents::IndexEndpoint
       end
     end
   end
