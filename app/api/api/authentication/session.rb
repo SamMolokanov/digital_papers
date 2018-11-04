@@ -14,7 +14,7 @@ module Api
       end
 
       def destroy(token)
-        user = current_user(token)
+        user = find_user(token)
         raise Error unless user
 
         session = Auth::Session.new(pepper: user.password_digest, token: token)
@@ -25,7 +25,7 @@ module Api
         user.save!
       end
 
-      def current_user(token)
+      def find_user(token)
         User.find_by_session(Auth::Session.new(token: token))
       end
     end

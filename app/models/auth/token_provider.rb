@@ -15,12 +15,15 @@ module Auth
       false
     end
 
+    ##
+    # +seed+ is needed to randomize tokens over time
+    #
     def required_options
       {
         iss: "Digital Papers",
         iat: Time.current.to_i,
         nbf: Time.current.to_i,
-        exp: Time.now.to_i + 3600 * 24 * 7,
+        exp: Time.current.to_i + 3600 * 24 * 7,
         sub: "Private API Authentication Token",
         seed: SecureRandom.hex(8),
       }
