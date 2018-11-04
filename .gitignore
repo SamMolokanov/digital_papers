@@ -34,3 +34,5 @@
 
 # Ignore local DB config
 /config/database.yml
+
+.DS_Store
