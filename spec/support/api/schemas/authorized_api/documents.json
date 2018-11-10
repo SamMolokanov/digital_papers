@@ -1,0 +1,5 @@
+{
+  "id": "file:/documents.json#",
+  "type": "array",
+  "items": { "$ref": "file:/document.json#" }
+}

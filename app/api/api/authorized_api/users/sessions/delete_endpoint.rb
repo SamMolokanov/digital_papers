@@ -11,6 +11,7 @@ module Api
             named: "delete_token"
 
           delete do
+            # TODO: Move session extraction to concern
             Api::Authentication::Session.destroy(headers["Authorization"].slice(7..-1))
 
             return_no_content

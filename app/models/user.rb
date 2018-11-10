@@ -2,6 +2,8 @@ class User < ApplicationRecord
   class SessionDuplicateError < StandardError
   end
 
+  has_many :documents
+
   has_secure_password
 
   attribute :sessions, :user_sessions
