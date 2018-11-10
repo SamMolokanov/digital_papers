@@ -4,6 +4,7 @@ module Api
       class RootEndpoint < Grape::API
         mount Documents::CreateEndpoint
         mount Documents::IndexEndpoint
+        mount Documents::DeleteEndpoint
       end
     end
   end
