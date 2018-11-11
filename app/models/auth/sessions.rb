@@ -32,8 +32,8 @@ module Auth
 
     private
 
-      def finder
-        proc { |digest, session| session.digest == digest }
-      end
+    def finder
+      proc { |digest, session| session.digest == digest }
+    end
   end
 end

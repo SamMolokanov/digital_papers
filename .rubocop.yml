@@ -5,5 +5,8 @@ inherit_gem:
 Style/FrozenStringLiteralComment:
     Enabled: false
 
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+
 AllCops:
   TargetRubyVersion: 2.5

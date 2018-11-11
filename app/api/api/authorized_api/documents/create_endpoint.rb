@@ -2,6 +2,8 @@ module Api
   module AuthorizedApi
     module Documents
       class CreateEndpoint < Grape::API
+        helpers AuthenticationHelper
+
         desc "Creates a new Document for the user",
           detail: "Returns the created document representation",
           headers: { "Authorization" => { description: "Authorization Token", type: "string" } },
@@ -18,10 +20,6 @@ module Api
         end
 
         post do
-          # TODO: Move User authorization somewhere
-          user = Authentication::Session.find_user(headers["Authorization"].slice(7..-1))
-          raise Authentication::Error unless user
-
           file = declared(params)["file"]
 
           document_params = {
@@ -32,7 +30,8 @@ module Api
               io: file["tempfile"],
             },
           }
-          document = user.documents.create!(document_params)
+
+          document = current_user.documents.create!(document_params)
 
           present document, with: Models::DocumentEntity
         end

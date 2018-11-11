@@ -2,6 +2,8 @@ module Api
   module AuthorizedApi
     module Documents
       class DeleteEndpoint < Grape::API
+        helpers AuthenticationHelper
+
         desc "Deletes the Document",
           detail: "Deletes the Document",
           headers: { "Authorization" => { description: "Authorization Token", type: "string" } },
@@ -17,11 +19,7 @@ module Api
         end
 
         delete ":id" do
-          # TODO: Move User authorization somewhere
-          user = Authentication::Session.find_user(headers["Authorization"].slice(7..-1))
-          raise Authentication::Error unless user
-
-          document = user.documents.find(declared(params)["id"])
+          document = current_user.documents.find(declared(params)["id"])
           document.destroy!
           return_no_content
         end
