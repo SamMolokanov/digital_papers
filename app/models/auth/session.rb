@@ -24,6 +24,7 @@ module Auth
     #   # => true
     #
     def initialize(pepper: nil, token: TokenProvider.generate(pepper: pepper))
+      # TODO: raise if token is nil
       @token = token
       @pepper = pepper
       @digest = Digest::MD5.hexdigest(token + ID_HASH_SALT)
