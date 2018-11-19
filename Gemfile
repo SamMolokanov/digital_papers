@@ -40,6 +40,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "jwt", "~> 2.1.0"
 
 # Use ActiveStorage variant
+gem "image_processing", "~> 1.7"
 # gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
