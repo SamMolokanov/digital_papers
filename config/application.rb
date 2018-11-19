@@ -32,5 +32,8 @@ module DigitalPapers
       g.system_tests = nil
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    # Images processor
+    config.active_storage.variant_processor = :vips
   end
 end

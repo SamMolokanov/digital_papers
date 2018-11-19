@@ -50,9 +50,15 @@ describe "POST /api/authorized/documents" do
       it { is_expected.to match_json_schema("authorized_api/document") }
 
       it "returns the created document as json" do
-        expect(JSON.parse(subject.body)).to eq(
+        expect(JSON.parse(subject.body)).to match(
           "id" => user.documents.last.id,
           "name" => "some document name",
+          "file" => {
+            "key" => ActiveStorage::Blob.last.key,
+            "filename" => "book.jpg",
+            "url" => an_instance_of(String),
+            "content_type" => "image/jpeg",
+          }
         )
       end
     end
