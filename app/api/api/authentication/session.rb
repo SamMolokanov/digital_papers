@@ -15,18 +15,16 @@ module Api
 
       def destroy(token)
         user = find_user(token)
+
         raise Error unless user
+        raise Error unless token_provider(user).valid?(token)
 
-        session = Auth::Session.new(token: token, token_provider: token_provider(user))
-
-        raise Error unless session.valid?
-
-        user.sessions.invalidate(session)
+        user.sessions.invalidate(token)
         user.save!
       end
 
       def find_user(token)
-        User.find_by_session(Auth::Session.new(token: token))
+        User.find_by_token(token)
       end
 
       def token_provider(user)

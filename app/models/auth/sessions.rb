@@ -14,8 +14,8 @@ module Auth
       @sessions = []
     end
 
-    def invalidate(session)
-      @sessions.delete_if(&finder(session.token))
+    def invalidate(token)
+      @sessions.delete_if(&finder(token))
     end
 
     def find(token)
