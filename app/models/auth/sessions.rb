@@ -22,10 +22,6 @@ module Auth
       @sessions.find(&finder(token))
     end
 
-    def <<(session)
-      @sessions << session
-    end
-
     def ==(that)
       sessions.map(&:to_h) == that.sessions.map(&:to_h)
     end
