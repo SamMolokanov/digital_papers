@@ -2,8 +2,6 @@ module Api
   module AuthorizedApi
     module Documents
       class CreateEndpoint < Grape::API
-        helpers AuthenticationHelper
-
         desc "Creates a new Document for the user",
           detail: "Returns the created document representation",
           headers: { "Authorization" => { description: "Authorization Token", type: "string" } },

@@ -2,8 +2,6 @@ module Api
   module AuthorizedApi
     module Documents
       class IndexEndpoint < Grape::API
-        helpers AuthenticationHelper
-
         desc "List of a Documents for the user",
           detail: "Returns the collection of documents",
           headers: { "Authorization" => { description: "Authorization Token", type: "string" } },
