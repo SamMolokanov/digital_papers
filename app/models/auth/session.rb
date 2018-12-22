@@ -1,8 +1,6 @@
 module Auth
   class Session
-    ID_HASH_SALT = "SALT_232fe5452ab0c586"
-
-    attr_reader :digest, :token
+    SESSION_SALT = ENV.fetch("SESSION_SALT", "TODO:FIXME SALT_232fe5452ab0c586")
 
     ##
     # Represents a single auth session
@@ -17,21 +15,29 @@ module Auth
     # Example, new session:
     #
     #   session = Auth::Session.new(pepper: "foobar")
+    #   session.token
+    #     # => "eyJhbGciOiJIUzI1NiJ9....JWT_token_here"
     #
     # Example, existing session:
     #
-    #   Auth::Session.new(pepper: "foobar", token: session.token).valid?
-    #   # => true
+    #   Auth::Session.new(pepper: "foobar", token: "eyJhbGciOiJIUzI1NiJ9....JWT_token_here").valid?
+    #     # => true
     #
-    def initialize(pepper: nil, token: TokenProvider.generate(pepper: pepper))
-      # TODO: raise if token is nil
+    def initialize(pepper: nil, token: nil, token_provider: TokenProvider.new(pepper))
       @token = token
-      @pepper = pepper
-      @digest = Digest::MD5.hexdigest(token + ID_HASH_SALT)
+      @token_provider = token_provider
     end
 
     def valid?
-      TokenProvider.valid?(@token, @pepper)
+      @token_provider.valid?(token)
+    end
+
+    def token
+      @token ||= @token_provider.generate
+    end
+
+    def digest
+      @digest ||= Digest::MD5.hexdigest(token + SESSION_SALT)
     end
 
     def ==(that)
