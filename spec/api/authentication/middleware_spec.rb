@@ -6,7 +6,7 @@ describe Api::Authentication::Middleware do
 
     context "when request has a valid token in the header" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token: Auth::TokenProvider.new(user.password_digest).generate) }
 
       let(:env) do
         { "HTTP_AUTHORIZATION" => "Bearer #{session.token}" }

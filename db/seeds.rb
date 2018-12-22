@@ -22,6 +22,6 @@ User.create(
     password_confirmation: "#{n}_asdfg12345",
   )
 
-  user.sessions << Auth::Session.new(pepper: user.password_digest)
+  user.sessions << Auth::Session.new(token: Auth::TokenProvider.new(user.password_digest).generate)
   user.save!
 end

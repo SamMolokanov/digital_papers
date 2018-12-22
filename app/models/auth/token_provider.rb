@@ -1,16 +1,18 @@
 module Auth
-  module TokenProvider
+  class TokenProvider
     ALGORITHM = "HS256"
     HMAC_SECRET = ENV.fetch("HMAC_SECRET", "TODO:FIXME")
 
-    module_function
-
-    def generate(payload = {}, pepper:)
-      JWT.encode(payload.merge(required_options), HMAC_SECRET + pepper, ALGORITHM)
+    def initialize(pepper)
+      @pepper = pepper
     end
 
-    def valid?(token, pepper)
-      JWT.decode(token, HMAC_SECRET + pepper, true, algorithm: ALGORITHM)
+    def generate(payload = {})
+      JWT.encode(payload.merge(required_options), HMAC_SECRET + @pepper, ALGORITHM)
+    end
+
+    def valid?(token)
+      JWT.decode(token, HMAC_SECRET + @pepper, true, algorithm: ALGORITHM)
     rescue JWT::DecodeError
       false
     end

@@ -2,8 +2,6 @@ module Api
   module AuthorizedApi
     module Documents
       class DeleteEndpoint < Grape::API
-        helpers AuthenticationHelper
-
         desc "Deletes the Document",
           detail: "Deletes the Document",
           headers: { "Authorization" => { description: "Authorization Token", type: "string" } },

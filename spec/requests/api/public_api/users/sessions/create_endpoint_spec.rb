@@ -25,7 +25,7 @@ describe "POST /api/public/users/sessions" do
 
     context "when returns response" do
       before do
-        allow(Auth::TokenProvider).to receive(:generate).and_return("foo")
+        allow_any_instance_of(Auth::TokenProvider).to receive(:generate).and_return("foo")
 
         post(
           path,

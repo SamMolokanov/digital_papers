@@ -56,7 +56,7 @@ describe User do
   describe "#auth_sessions" do
     context "when saves session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token: Auth::TokenProvider.new(user.password_digest).generate) }
 
       before do
         user.sessions << session
@@ -66,18 +66,20 @@ describe User do
       subject(:user_sessions) { user.reload.sessions }
 
       it "saves sessions" do
-        expect(user_sessions.find(session.digest)).to eq session
+        expect(user_sessions.find(session.token)).to eq session
       end
     end
 
     context "when removes session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:token) {  Auth::TokenProvider.new(user.password_digest).generate }
+      let(:session) { Auth::Session.new(token: token) }
 
       before do
         user.sessions << session
         user.save
-        user.sessions.invalidate(session)
+
+        user.sessions.invalidate(token)
         user.save
       end
 
@@ -89,41 +91,40 @@ describe User do
     end
   end
 
-  describe ".find_by_session" do
+  describe ".find_by_token" do
     context "when single user obtains the session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token: "foo") }
 
       before do
         user.sessions << session
         user.save
 
         create(:user).tap do |user|
-          user.sessions << Auth::Session.new(pepper: user.password_digest)
-          user.sessions << Auth::Session.new(pepper: user.password_digest)
+          user.sessions << Auth::Session.new(token: "bar")
           user.save
         end
       end
 
-      subject { described_class.find_by_session(session) }
+      subject { described_class.find_by_token("foo") }
 
       it { is_expected.to eq user }
     end
 
     context "when multiple users obtain the session" do
-      let(:session) { Auth::Session.new(pepper: "foobar") }
+      let(:session) { Auth::Session.new(token: "foo") }
 
       before do
         2.times do
           create(:user).tap do |user|
             user.sessions << session
-            user.sessions << Auth::Session.new(pepper: user.password_digest)
+            user.sessions << Auth::Session.new(token: "bar")
             user.save
           end
         end
       end
 
-      subject { described_class.find_by_session(session) }
+      subject { described_class.find_by_token("foo") }
 
       it "raises SessionDuplicateError exception" do
         expect { subject }.to raise_exception User::SessionDuplicateError

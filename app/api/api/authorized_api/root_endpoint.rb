@@ -8,6 +8,8 @@ module Api
 
       auth :digital_papers_token
 
+      helpers AuthenticationHelper
+
       mount Documents::RootEndpoint => "documents"
       mount Users::RootEndpoint => "users"
     end
