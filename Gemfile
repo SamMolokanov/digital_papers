@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.5.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 5.2.1"
+gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
@@ -23,7 +23,7 @@ gem "jbuilder", "~> 2.5"
 
 # Grape and Swagger API
 #
-gem "grape", "~> 1.1.0"
+gem "grape", "~> 1.2.2"
 gem "grape-entity", "~> 0.7.1"
 gem "grape-swagger", "~> 0.31.0"
 gem "grape-swagger-entity", "~> 0.3.0"
