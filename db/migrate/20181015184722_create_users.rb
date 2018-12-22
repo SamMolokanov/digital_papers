@@ -9,7 +9,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
       ## Sessions
       # [
-      #   { digest: sessionDigest, token: tokenValue, revoked: Boolean }
+      #   { token: tokenValue, revoked: Boolean }
       # ]
       t.jsonb :sessions, default: [], null: false
 

@@ -15,11 +15,11 @@ module Auth
     end
 
     def invalidate(session)
-      @sessions.delete_if(&finder(session.digest))
+      @sessions.delete_if(&finder(session.token))
     end
 
-    def find(digest)
-      @sessions.find(&finder(digest))
+    def find(token)
+      @sessions.find(&finder(token))
     end
 
     def <<(session)
@@ -32,8 +32,8 @@ module Auth
 
     private
 
-    def finder(digest)
-      proc { |session| session.digest == digest }
+    def finder(token)
+      proc { |session| session.token == token }
     end
   end
 end

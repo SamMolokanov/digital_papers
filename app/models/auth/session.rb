@@ -1,7 +1,5 @@
 module Auth
   class Session
-    SESSION_SALT = ENV.fetch("SESSION_SALT", "TODO:FIXME SALT_232fe5452ab0c586")
-
     ##
     # Represents a single auth session
     #
@@ -40,19 +38,12 @@ module Auth
       @token ||= @token_provider.generate
     end
 
-    def digest
-      @digest ||= Digest::MD5.hexdigest(token + SESSION_SALT)
-    end
-
     def ==(that)
       to_h == that.to_h
     end
 
     def to_h
-      {
-        "digest" => digest,
-        "token" => token,
-      }
+      { "token" => token }
     end
   end
 end

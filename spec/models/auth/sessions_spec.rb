@@ -38,7 +38,7 @@ describe Auth::Sessions do
 
     let(:sessions) { described_class.new([session1, session2]) }
 
-    subject { sessions.find(session2.digest) }
+    subject { sessions.find(session2.token) }
 
     it { is_expected.to eq session2 }
   end

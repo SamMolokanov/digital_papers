@@ -7,8 +7,8 @@ describe User::SessionsType do
 
     let(:raw_sessions) do
       [
-        { digest: session1.digest, token: session1.token },
-        { digest: session2.digest, token: session2.token },
+        { token: session1.token },
+        { token: session2.token },
       ].to_json
     end
 
@@ -29,8 +29,8 @@ describe User::SessionsType do
 
     it "serializes sessions as JSON" do
       is_expected.to eq [
-        { digest: session1.digest, token: session1.token },
-        { digest: session2.digest, token: session2.token },
+        { token: session1.token },
+        { token: session2.token },
       ].to_json
     end
   end

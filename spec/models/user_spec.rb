@@ -66,7 +66,7 @@ describe User do
       subject(:user_sessions) { user.reload.sessions }
 
       it "saves sessions" do
-        expect(user_sessions.find(session.digest)).to eq session
+        expect(user_sessions.find(session.token)).to eq session
       end
     end
 

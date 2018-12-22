@@ -18,7 +18,7 @@ class User < ApplicationRecord
   validates_length_of :name, :email, :password_digest, maximum: 255
 
   def self.find_by_session(session)
-    users = User.where("users.sessions @> ?", [digest: session.digest].to_json)
+    users = where("users.sessions @> ?", [token: session.token].to_json)
 
     raise SessionDuplicateError if users.length > 1
 
