@@ -8,7 +8,7 @@ class User
 
     def deserialize(raw_sessions)
       sessions = ActiveSupport::JSON.decode(raw_sessions) rescue []
-      Auth::Sessions.new(sessions.map { |s| Auth::Session.new(pepper: nil, token: s["token"]) })
+      Auth::Sessions.new(sessions.map { |s| Auth::Session.new(token: s["token"]) })
     end
 
     def serialize(sessions)

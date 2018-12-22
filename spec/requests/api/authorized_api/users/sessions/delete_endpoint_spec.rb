@@ -8,8 +8,7 @@ describe "DELETE /api/authorized/users/sessions" do
     let(:session) { user.sessions.first }
 
     before do
-      user.sessions << Auth::Session.new(pepper: user.password_digest)
-      user.sessions << Auth::Session.new(pepper: user.password_digest)
+      2.times { user.sessions << Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest)) }
       user.save
     end
 

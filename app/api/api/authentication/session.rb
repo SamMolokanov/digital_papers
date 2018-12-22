@@ -7,7 +7,7 @@ module Api
         user = User.find_by(email: email)
         raise Error unless user && user.authenticate(password)
 
-        session = Auth::Session.new(pepper: user.password_digest)
+        session = Auth::Session.new(token_provider: token_provider(user))
         user.sessions << session
         user.save!
         session
@@ -17,7 +17,7 @@ module Api
         user = find_user(token)
         raise Error unless user
 
-        session = Auth::Session.new(pepper: user.password_digest, token: token)
+        session = Auth::Session.new(token: token, token_provider: token_provider(user))
 
         raise Error unless session.valid?
 
@@ -27,6 +27,10 @@ module Api
 
       def find_user(token)
         User.find_by_session(Auth::Session.new(token: token))
+      end
+
+      def token_provider(user)
+        Auth::TokenProvider.new(user.password_digest)
       end
     end
   end

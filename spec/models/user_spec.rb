@@ -56,7 +56,7 @@ describe User do
   describe "#auth_sessions" do
     context "when saves session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest)) }
 
       before do
         user.sessions << session
@@ -72,7 +72,7 @@ describe User do
 
     context "when removes session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest)) }
 
       before do
         user.sessions << session
@@ -92,15 +92,15 @@ describe User do
   describe ".find_by_session" do
     context "when single user obtains the session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(pepper: user.password_digest) }
+      let(:session) { Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest)) }
 
       before do
         user.sessions << session
         user.save
 
         create(:user).tap do |user|
-          user.sessions << Auth::Session.new(pepper: user.password_digest)
-          user.sessions << Auth::Session.new(pepper: user.password_digest)
+          user.sessions << Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest))
+          user.sessions << Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest))
           user.save
         end
       end
@@ -111,13 +111,13 @@ describe User do
     end
 
     context "when multiple users obtain the session" do
-      let(:session) { Auth::Session.new(pepper: "foobar") }
+      let(:session) { Auth::Session.new(token_provider: Auth::TokenProvider.new("foobar")) }
 
       before do
         2.times do
           create(:user).tap do |user|
             user.sessions << session
-            user.sessions << Auth::Session.new(pepper: user.password_digest)
+            user.sessions << Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest))
             user.save
           end
         end

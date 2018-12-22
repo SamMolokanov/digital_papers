@@ -14,16 +14,20 @@ module Auth
     #
     # Example, new session:
     #
-    #   session = Auth::Session.new(pepper: "foobar")
+    #   session = Auth::Session.new(token_provider: Auth::TokenProvider.new("foobar"))
     #   session.token
     #     # => "eyJhbGciOiJIUzI1NiJ9....JWT_token_here"
     #
     # Example, existing session:
     #
-    #   Auth::Session.new(pepper: "foobar", token: "eyJhbGciOiJIUzI1NiJ9....JWT_token_here").valid?
+    #   Auth::Session.new(token: "eyJhbG...JWT_token_here", token_provider: Auth::TokenProvider.new("foobar")).valid?
     #     # => true
     #
-    def initialize(pepper: nil, token: nil, token_provider: TokenProvider.new(pepper))
+    def initialize(token: nil, token_provider: nil)
+      if token.nil? && token_provider.nil?
+        raise ArgumentError, "Token and token_provider can not be nil simultaneously!"
+      end
+
       @token = token
       @token_provider = token_provider
     end

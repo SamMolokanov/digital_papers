@@ -7,7 +7,7 @@ FactoryBot.define do
 
     factory :authorized_user do
       after(:create) do |user|
-        user.sessions << Auth::Session.new(pepper: user.password_digest)
+        user.sessions << Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest))
         user.save
       end
     end

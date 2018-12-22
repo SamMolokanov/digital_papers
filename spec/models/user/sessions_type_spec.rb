@@ -20,8 +20,8 @@ describe User::SessionsType do
   end
 
   describe "#serialize" do
-    let(:session1) { Auth::Session.new(pepper: "a") }
-    let(:session2) { Auth::Session.new(pepper: "b") }
+    let(:session1) { Auth::Session.new(token_provider: Auth::TokenProvider.new("a")) }
+    let(:session2) { Auth::Session.new(token_provider: Auth::TokenProvider.new("b")) }
 
     let(:auth_sessions) { Auth::Sessions.new([session1, session2]) }
 
