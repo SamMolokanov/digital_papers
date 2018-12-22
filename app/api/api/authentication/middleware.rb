@@ -27,7 +27,10 @@ module Api
       private
 
       def token
-        @env.fetch(HTTP_AUTHORIZATION, "").slice(7..-1)
+        scheme, raw_token = @env.fetch(HTTP_AUTHORIZATION, "").split(" ")
+
+        return nil if scheme != "Bearer"
+        raw_token
       end
 
       def current_user
