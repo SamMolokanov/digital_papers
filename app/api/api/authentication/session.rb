@@ -7,7 +7,7 @@ module Api
         user = User.find_by(email: email)
         raise Error unless user && user.authenticate(password)
 
-        session = Auth::Session.new(token_provider: token_provider(user))
+        session = Auth::Session.new(token: token_provider(user).generate)
         user.sessions << session
         user.save!
         session

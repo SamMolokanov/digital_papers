@@ -56,7 +56,7 @@ describe User do
   describe "#auth_sessions" do
     context "when saves session" do
       let(:user) { create :user }
-      let(:session) { Auth::Session.new(token_provider: Auth::TokenProvider.new(user.password_digest)) }
+      let(:session) { Auth::Session.new(token: Auth::TokenProvider.new(user.password_digest).generate) }
 
       before do
         user.sessions << session
