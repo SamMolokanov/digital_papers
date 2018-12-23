@@ -1,7 +1,7 @@
 module Api
   module PublicApi
     module Users
-      module Sessions
+      module Tokens
         class CreateEndpoint < Grape::API
           desc "Creates a new Token",
             detail: "Returns new auth token",

@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe "POST /api/public/users/sessions" do
-  let(:path) { "/api/public/users/sessions" }
+describe "POST /api/public/users/tokens" do
+  let(:path) { "/api/public/users/tokens" }
 
   context "when valid params" do
     let(:password) { "asdfg1234" }

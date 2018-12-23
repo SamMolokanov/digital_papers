@@ -4,7 +4,7 @@ module Api
       class RootEndpoint < Grape::API
         mount CreateEndpoint
 
-        mount Sessions::RootEndpoint => "/sessions"
+        mount Tokens::RootEndpoint => "/tokens"
       end
     end
   end
