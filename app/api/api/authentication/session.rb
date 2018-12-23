@@ -1,33 +1,38 @@
 module Api
   module Authentication
-    module Session
-      module_function
+    class Session
+      attr_reader :token
 
-      def create(email, password)
+      # TODO: refactor this method
+      def self.create!(email, password)
         user = User.find_by(email: email)
         raise Error unless user && user.authenticate(password)
 
-        session = Auth::Session.new(token: token_provider(user).generate)
+        token = Auth::TokenProvider.new(user.password_digest).generate
+        session = Auth::Session.new(token: token)
         user.sessions << session
         user.save!
-        session
+
+        new(session.token)
       end
 
-      def destroy(token)
-        user = find_user(token)
+      def initialize(token)
+        @token = token
+      end
 
+      def user
+        @user ||= User.find_by_token(token)
+      end
+
+      def destroy!
         raise Error unless user
-        raise Error unless token_provider(user).valid?(token)
+        raise Error unless token_provider.valid?(token)
 
         user.sessions.invalidate(token)
         user.save!
       end
 
-      def find_user(token)
-        User.find_by_token(token)
-      end
-
-      def token_provider(user)
+      def token_provider
         Auth::TokenProvider.new(user.password_digest)
       end
     end

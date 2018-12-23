@@ -18,7 +18,7 @@ module Api
           end
 
           post do
-            session = Api::Authentication::Session.create(
+            session = Api::Authentication::Session.create!(
               declared(params)[:email].downcase,
               declared(params)[:password],
             )

@@ -11,7 +11,7 @@ module Api
             named: "delete_token"
 
           delete do
-            Api::Authentication::Session.destroy(current_token)
+            Api::Authentication::Session.new(current_token).destroy!
 
             return_no_content
           end

@@ -1,8 +1,7 @@
 module Api
   module Authentication
     class Middleware
-      CURRENT_USER = "CURRENT_USER"
-      CURRENT_TOKEN = "CURRENT_TOKEN"
+      CURRENT_AUTH_SESSION = "CURRENT_AUTH_SESSION"
       HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION"
 
       attr_reader :app
@@ -19,14 +18,18 @@ module Api
       def _call(env)
         @env = env
 
-        raise Error unless token.present? && current_user.present?
-        env[CURRENT_USER] = current_user
-        env[CURRENT_TOKEN] = token
+        raise Error unless token.present? && auth_session.user.present?
+
+        env[CURRENT_AUTH_SESSION] = auth_session
 
         app.call(env)
       end
 
       private
+
+      def auth_session
+        @auth_session ||= Authentication::Session.new(token)
+      end
 
       def token
         return @token if defined? @token
@@ -35,10 +38,6 @@ module Api
 
         return nil if scheme != "Bearer"
         @token = raw_token
-      end
-
-      def current_user
-        @current_user ||= Authentication::Session.find_user(token)
       end
     end
   end
