@@ -1,9 +1,9 @@
 module Api
-  module AuthorizedApi
+  module PublicApi
     module Users
-      module Sessions
+      module Tokens
         class RootEndpoint < Grape::API
-          mount Sessions::DeleteEndpoint => "/"
+          mount Tokens::CreateEndpoint => "/"
         end
       end
     end

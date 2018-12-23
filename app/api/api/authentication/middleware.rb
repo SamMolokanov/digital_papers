@@ -2,6 +2,7 @@ module Api
   module Authentication
     class Middleware
       CURRENT_USER = "CURRENT_USER"
+      CURRENT_TOKEN = "CURRENT_TOKEN"
       HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION"
 
       attr_reader :app
@@ -20,6 +21,7 @@ module Api
 
         raise Error unless token.present? && current_user.present?
         env[CURRENT_USER] = current_user
+        env[CURRENT_TOKEN] = token
 
         app.call(env)
       end
@@ -27,10 +29,12 @@ module Api
       private
 
       def token
+        return @token if defined? @token
+
         scheme, raw_token = @env.fetch(HTTP_AUTHORIZATION, "").split(" ")
 
         return nil if scheme != "Bearer"
-        raw_token
+        @token = raw_token
       end
 
       def current_user

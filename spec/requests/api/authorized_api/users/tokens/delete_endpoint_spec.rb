@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe "DELETE /api/authorized/users/sessions" do
-  let(:path) { "/api/authorized/users/sessions" }
+describe "DELETE /api/authorized/users/tokens" do
+  let(:path) { "/api/authorized/users/tokens" }
 
   context "when valid params" do
     let(:user) { create :authorized_user }

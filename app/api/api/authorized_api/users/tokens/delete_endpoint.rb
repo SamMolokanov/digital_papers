@@ -1,7 +1,7 @@
 module Api
   module AuthorizedApi
     module Users
-      module Sessions
+      module Tokens
         class DeleteEndpoint < Grape::API
           desc "Deletes the Token",
             detail: "Deletes the provided auth token",
@@ -11,8 +11,7 @@ module Api
             named: "delete_token"
 
           delete do
-            # TODO: Move session extraction to concern
-            Api::Authentication::Session.destroy(headers["Authorization"].slice(7..-1))
+            Api::Authentication::Session.destroy(current_token)
 
             return_no_content
           end

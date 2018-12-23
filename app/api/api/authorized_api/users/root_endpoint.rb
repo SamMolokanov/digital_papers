@@ -2,7 +2,7 @@ module Api
   module AuthorizedApi
     module Users
       class RootEndpoint < Grape::API
-        mount Sessions::RootEndpoint => "/sessions"
+        mount Tokens::RootEndpoint => "/tokens"
       end
     end
   end
