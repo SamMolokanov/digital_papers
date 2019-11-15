@@ -30,7 +30,7 @@ gem "grape-swagger-entity", "~> 0.3.0"
 gem "grape-swagger-rails", "~> 0.3.0"
 gem "grape_logging", "~> 1.8.0"
 
-gem "rack-cors", "~> 1.0.2", require: "rack/cors"
+gem "rack-cors", "~> 1.0.5", require: "rack/cors"
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
