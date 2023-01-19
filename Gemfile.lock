@@ -57,7 +57,7 @@ GEM
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.10)
     crass (1.0.6)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -71,8 +71,8 @@ GEM
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     ffi (1.15.5)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     grape (1.2.3)
       activesupport
       builder
@@ -93,7 +93,7 @@ GEM
     grape_logging (1.8.1)
       grape
       rack
-    i18n (1.6.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     image_processing (1.12.2)
@@ -125,7 +125,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.0.1)
     mini_portile2 (2.8.0)
-    minitest (5.11.3)
+    minitest (5.17.0)
     msgpack (1.2.9)
     multi_json (1.13.1)
     mustermann (1.0.3)
@@ -240,7 +240,7 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.5)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
